@@ -27,7 +27,10 @@ class AuthService {
   }
 
   Future<void> googleLogin() async {
-    await supabase.auth.signInWithOAuth(OAuthProvider.google);
+    await supabase.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: 'io.supabase.todoproject://login-callback/',
+    );
   }
 
   Future<void> logout() async {

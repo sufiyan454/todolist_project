@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todoproject/services/auth_services.dart';
 import 'home_screen.dart';
 import 'signup_screen.dart';
@@ -18,6 +19,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isLoading = false;
   bool obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen for auth state changes (handles Google OAuth callback)
+    Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+      final event = data.event;
+      if (event == AuthChangeEvent.signedIn) {
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => HomeScreen()),
+          );
+        }
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -53,12 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => isLoading = true);
     try {
       await auth.googleLogin();
-      await Future.delayed(const Duration(seconds: 2));
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => HomeScreen()),
-      );
+      // Navigation handled by onAuthStateChange listener above
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -87,7 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo / Icon
                   Container(
                     width: 80,
                     height: 80,
@@ -203,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       GestureDetector(
                         onTap: () => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) =>  SignupScreen()),
+                          MaterialPageRoute(builder: (_) => const SignupScreen()),
                         ),
                         child: const Text(
                           'Sign Up',

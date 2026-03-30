@@ -21,7 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   String selectedFilter = 'all';
 
   final List<String> taskTypes = ['daily', 'weekly', 'personal', 'work'];
-  final List<String> filters = ['all', 'daily', 'weekly', 'personal', 'work', 'done'];
+  final List<String> filters = [
+    'all',
+    'daily',
+    'weekly',
+    'personal',
+    'work',
+    'done',
+  ];
 
   @override
   void initState() {
@@ -37,7 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load tasks: $e'), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text('Failed to load tasks: $e'),
+            backgroundColor: Colors.red,
+          ),
         );
       }
     } finally {
@@ -61,10 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (_) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           title: Text(
             task == null ? 'Add Task' : 'Edit Task',
-            style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2D2D2D)),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF2D2D2D),
+            ),
           ),
           content: Form(
             key: formKey,
@@ -78,7 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       labelText: 'Title',
                       border: OutlineInputBorder(),
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Title is required' : null,
+                    validator: (v) =>
+                        (v == null || v.isEmpty) ? 'Title is required' : null,
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -98,12 +114,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       border: OutlineInputBorder(),
                     ),
                     items: taskTypes
-                        .map((t) => DropdownMenuItem(
-                              value: t,
-                              child: Text(t[0].toUpperCase() + t.substring(1)),
-                            ))
+                        .map(
+                          (t) => DropdownMenuItem(
+                            value: t,
+                            child: Text(t[0].toUpperCase() + t.substring(1)),
+                          ),
+                        )
                         .toList(),
-                    onChanged: (val) => setDialogState(() => selectedType = val!),
+                    onChanged: (val) =>
+                        setDialogState(() => selectedType = val!),
                   ),
                 ],
               ),
@@ -137,7 +156,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 } catch (e) {
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+                      SnackBar(
+                        content: Text('Error: $e'),
+                        backgroundColor: Colors.red,
+                      ),
                     );
                   }
                 }
@@ -145,7 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF6C63FF),
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               child: Text(task == null ? 'Add' : 'Update'),
             ),
@@ -163,10 +187,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Delete Task'),
         content: Text('Are you sure you want to delete "${task.title}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
             child: const Text('Delete'),
           ),
         ],
@@ -180,7 +210,10 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Delete failed: $e'), backgroundColor: Colors.red),
+            SnackBar(
+              content: Text('Delete failed: $e'),
+              backgroundColor: Colors.red,
+            ),
           );
         }
       }
@@ -194,7 +227,10 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Update failed: $e'), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text('Update failed: $e'),
+            backgroundColor: Colors.red,
+          ),
         );
       }
     }
@@ -208,10 +244,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Logout'),
         content: const Text('Are you sure you want to logout?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C63FF), foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF6C63FF),
+              foregroundColor: Colors.white,
+            ),
             child: const Text('Logout'),
           ),
         ],
@@ -258,8 +300,14 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Hello, $userName 👋', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-            Text('$done of $total tasks done', style: const TextStyle(fontSize: 12, color: Colors.white70)),
+            Text(
+              'Hello, $userName 👋',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              '$done of $total tasks done',
+              style: const TextStyle(fontSize: 12, color: Colors.white70),
+            ),
           ],
         ),
         actions: [
@@ -312,8 +360,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     onSelected: (_) => setState(() => selectedFilter = f),
                     selectedColor: const Color(0xFF6C63FF),
                     labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : const Color(0xFF2D2D2D),
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                      color: isSelected
+                          ? Colors.white
+                          : const Color(0xFF2D2D2D),
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.normal,
                       fontSize: 13,
                     ),
                     backgroundColor: const Color(0xFFF0F0FF),
@@ -328,39 +380,50 @@ class _HomeScreenState extends State<HomeScreen> {
           // Task List
           Expanded(
             child: isLoading
-                ? const Center(child: CircularProgressIndicator(color: Color(0xFF6C63FF)))
+                ? const Center(
+                    child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+                  )
                 : filteredTasks.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.task_alt, size: 72, color: Colors.grey.shade300),
-                            const SizedBox(height: 16),
-                            Text(
-                              selectedFilter == 'all' ? 'No tasks yet!\nTap + to add one.' : 'No $selectedFilter tasks.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
-                            ),
-                          ],
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.task_alt,
+                          size: 72,
+                          color: Colors.grey.shade300,
                         ),
-                      )
-                    : RefreshIndicator(
-                        onRefresh: loadTasks,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.all(16),
-                          itemCount: filteredTasks.length,
-                          itemBuilder: (_, i) {
-                            final task = filteredTasks[i];
-                            return _TaskCard(
-                              task: task,
-                              typeColor: _typeColor(task.type),
-                              onToggle: () => handleToggle(task),
-                              onEdit: () => showAddEditDialog(task: task),
-                              onDelete: () => handleDelete(task),
-                            );
-                          },
+                        const SizedBox(height: 16),
+                        Text(
+                          selectedFilter == 'all'
+                              ? 'No tasks yet!\nTap + to add one.'
+                              : 'No $selectedFilter tasks.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
+                      ],
+                    ),
+                  )
+                : RefreshIndicator(
+                    onRefresh: loadTasks,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: filteredTasks.length,
+                      itemBuilder: (_, i) {
+                        final task = filteredTasks[i];
+                        return _TaskCard(
+                          task: task,
+                          typeColor: _typeColor(task.type),
+                          onToggle: () => handleToggle(task),
+                          onEdit: () => showAddEditDialog(task: task),
+                          onDelete: () => handleDelete(task),
+                        );
+                      },
+                    ),
+                  ),
           ),
         ],
       ),
@@ -369,7 +432,10 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xFF6C63FF),
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
-        label: const Text('Add Task', style: TextStyle(fontWeight: FontWeight.w600)),
+        label: const Text(
+          'Add Task',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }
@@ -417,7 +483,9 @@ class _TaskCard extends StatelessWidget {
               shape: BoxShape.circle,
               color: task.isDone ? const Color(0xFF6C63FF) : Colors.transparent,
               border: Border.all(
-                color: task.isDone ? const Color(0xFF6C63FF) : Colors.grey.shade400,
+                color: task.isDone
+                    ? const Color(0xFF6C63FF)
+                    : Colors.grey.shade400,
                 width: 2,
               ),
             ),
@@ -472,10 +540,25 @@ class _TaskCard extends StatelessWidget {
             if (val == 'delete') onDelete();
           },
           itemBuilder: (_) => [
-            const PopupMenuItem(value: 'edit', child: Row(children: [Icon(Icons.edit, size: 18), SizedBox(width: 8), Text('Edit')])),
+            const PopupMenuItem(
+              value: 'edit',
+              child: Row(
+                children: [
+                  Icon(Icons.edit, size: 18),
+                  SizedBox(width: 8),
+                  Text('Edit'),
+                ],
+              ),
+            ),
             const PopupMenuItem(
               value: 'delete',
-              child: Row(children: [Icon(Icons.delete, size: 18, color: Colors.red), SizedBox(width: 8), Text('Delete', style: TextStyle(color: Colors.red))]),
+              child: Row(
+                children: [
+                  Icon(Icons.delete, size: 18, color: Colors.red),
+                  SizedBox(width: 8),
+                  Text('Delete', style: TextStyle(color: Colors.red)),
+                ],
+              ),
             ),
           ],
           icon: const Icon(Icons.more_vert, color: Colors.grey),
